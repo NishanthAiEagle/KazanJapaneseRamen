@@ -937,15 +937,18 @@ function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   mv.setAttribute('src', d.glbPath);
   if (isIOS && d.usdzPath) mv.setAttribute('ios-src', d.usdzPath);
   const s = d.scale.toFixed(6);
-  mv.setAttribute('scale',            `${s} ${s} ${s}`);
-  mv.setAttribute('camera-orbit',     '0deg 70deg 1.5m');
-  mv.setAttribute('min-camera-orbit', 'auto 70deg 1.5m');
-  mv.setAttribute('max-camera-orbit', 'auto 70deg 1.5m');
-  mv.setAttribute('disable-zoom',     '');
-  mv.setAttribute('ar',               '');
-  mv.setAttribute('ar-modes',         'webxr scene-viewer quick-look');
-  mv.setAttribute('ar-placement',     'floor');
-  mv.setAttribute('ar-scale',         'fixed');
+  mv.setAttribute('scale',        `${s} ${s} ${s}`);
+mv.setAttribute('ar',           '');
+mv.setAttribute('ar-modes',     'webxr scene-viewer quick-look');
+mv.setAttribute('ar-placement', 'floor');
+mv.setAttribute('ar-scale',     'fixed');
+
+// Camera auto-fits to the scaled model in 3D preview
+mv.setAttribute('camera-orbit',  '0deg 75deg auto');
+mv.setAttribute('field-of-view', '30deg');
+mv.removeAttribute('disable-zoom');
+mv.removeAttribute('min-camera-orbit');
+mv.removeAttribute('max-camera-orbit');
   mv.setAttribute('camera-controls',  '');
   mv.setAttribute('shadow-intensity', '1');
   mv.setAttribute('environment-image','neutral');
