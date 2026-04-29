@@ -36,6 +36,7 @@
       --shadow-deep: rgba(28,17,8,0.22);
     }
 
+    /* ── WASHI TEXTURE BACKGROUND ── */
     html { scroll-behavior: smooth; }
 
     body {
@@ -47,6 +48,7 @@
       min-height: 100svh;
     }
 
+    /* ── SEIGAIHA (wave) PATTERN SVG ── */
     .seigaiha-bg {
       position: absolute;
       inset: 0;
@@ -68,6 +70,7 @@
 
     .site-header .seigaiha-bg { opacity: 0.07; }
 
+    /* Ink wash gradient overlay */
     .site-header::before {
       content: '';
       position: absolute;
@@ -78,6 +81,7 @@
       pointer-events: none;
     }
 
+    /* Torii-red top border */
     .site-header::after {
       content: '';
       position: absolute;
@@ -86,6 +90,7 @@
       background: linear-gradient(90deg, transparent, var(--crimson-mid), var(--gold-lt), var(--crimson-mid), transparent);
     }
 
+    /* Decorative mon (family crest) circle */
     .header-mon {
       width: 52px; height: 52px;
       border: 1.5px solid rgba(196,160,48,0.5);
@@ -142,6 +147,7 @@
       margin-bottom: 20px;
     }
 
+    /* Ink brush stroke divider */
     .brush-divider {
       width: 120px; height: 2px;
       background: linear-gradient(90deg, transparent, var(--crimson-mid), transparent);
@@ -176,6 +182,7 @@
     }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
 
+    /* Lang picker */
     #language-picker { position: relative; z-index: 10; margin-bottom: 18px; }
     #lang-select {
       background: rgba(245,237,224,0.08);
@@ -253,6 +260,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .state-box p { font-size: 13px; font-family: 'Noto Serif JP', serif; letter-spacing: 2px; }
 
+    /* Section label — ink brush style */
     .section-label {
       display: flex; align-items: center; gap: 14px;
       margin: 2rem 0 1rem;
@@ -289,6 +297,7 @@
       overflow: hidden;
     }
 
+    /* Subtle seigaiha watermark on each card */
     .menu-card::before {
       content: '';
       position: absolute;
@@ -448,8 +457,10 @@
       position: relative; overflow: hidden;
     }
 
+    /* Seigaiha on modal header */
     .modal-viewer-wrap .seigaiha-bg { opacity: 0.08; }
 
+    /* Gold frame corners on modal viewer */
     .modal-viewer-wrap::before {
       content: '';
       position: absolute; inset: 12px;
@@ -457,11 +468,8 @@
       pointer-events: none; z-index: 3;
     }
 
-    /* ── FIX: model-viewer visible & properly layered ── */
     model-viewer {
-      display: block;
-      width: 100%;
-      height: 300px;
+      display: block; width: 100%; height: 300px;
       background: transparent;
       --progress-bar-color: #b8860b;
       --progress-mask: transparent;
@@ -576,6 +584,7 @@
 
     .menu-card.unavailable { opacity: 0.4; pointer-events: none; }
 
+    /* FunZone btn */
     .funzone-btn {
       display: inline-flex; align-items: center; gap: 6px;
       background: linear-gradient(135deg, var(--crimson), var(--gold));
@@ -587,21 +596,6 @@
       transition: opacity 0.15s;
     }
     .funzone-btn:hover { opacity: 0.85; }
-
-    /* ── AR launch button inside modal ── */
-    .modal-ar-launch-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--crimson); color: var(--washi);
-      border: none; padding: 11px 24px;
-      font-family: 'Cinzel', serif;
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 2px; cursor: pointer;
-      white-space: nowrap; min-height: 44px;
-      box-shadow: 0 4px 18px rgba(139,26,26,0.45);
-      transition: opacity 0.15s;
-    }
-    .modal-ar-launch-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .modal-ar-launch-btn:not(:disabled):hover { opacity: 0.85; }
   </style>
 </head>
 <body>
@@ -676,56 +670,46 @@
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   DISH IMAGE MAP  (keep your actual base64 values)
-═══════════════════════════════════════════════════ */
 const DISH_IMAGES = {
-  "Agedashi-Tofu":    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Edamame":          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Gyoza":            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Karaage":          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Agedashi-Tofu": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Edamame": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Gyoza": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Karaage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
   "Matcha-Ice-Cream": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Miso-Soup":        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Ramen":            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Salmon-Sashimi":   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Takoyaki":         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
-  "Tempura":          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA..."
+  "Miso-Soup": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Ramen": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Salmon-Sashimi": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Takoyaki": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA...",
+  "Tempura": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACA..."
 };
 
-/* ═══════════════════════════════════════════════════
-   LOCAL ASSETS  — scale tuned for real-world AR size
-   (GLB models exported in metres → dish ≈ 20-25 cm)
-═══════════════════════════════════════════════════ */
 const LOCAL_ASSETS = {
-  'agedashi tofu':    { folder: 'Agedashi-Tofu',    file: 'Agedashi-Tofu',    scale: 0.08 },
-  'edamame':          { folder: 'Edamame',           file: 'Edamame',          scale: 0.06 },
-  'gyoza':            { folder: 'Gyoza',             file: 'Gyoza',            scale: 0.07 },
-  'karaage':          { folder: 'Karaage',           file: 'Karaage',          scale: 0.07 },
-  'matcha ice cream': { folder: 'Matcha-Ice-Cream',  file: 'Matcha-Ice-Cream', scale: 0.06 },
-  'miso soup':        { folder: 'Miso-Soup',         file: 'Miso-Soup',        scale: 0.07 },
-  'ramen':            { folder: 'Ramen',             file: 'Ramen',            scale: 0.08 },
-  'salmon sashimi':   { folder: 'Salmon-Sashimi',    file: 'Salmon-Sashimi',   scale: 0.07 },
-  'takoyaki':         { folder: 'Takoyaki',          file: 'Takoyaki',         scale: 0.06 },
-  'tempura':          { folder: 'Tempura',           file: 'Tempura',          scale: 0.07 },
+  'agedashi tofu':    { folder: 'Agedashi-Tofu',    file: 'Agedashi-Tofu',    scale: 0.15 },
+  'edamame':          { folder: 'Edamame',           file: 'Edamame',          scale: 0.15 },
+  'gyoza':            { folder: 'Gyoza',             file: 'Gyoza',            scale: 0.3  },
+  'karaage':          { folder: 'Karaage',           file: 'Karaage',          scale: 0.15 },
+  'matcha ice cream': { folder: 'Matcha-Ice-Cream',  file: 'Matcha-Ice-Cream', scale: 0.3  },
+  'miso soup':        { folder: 'Miso-Soup',         file: 'Miso-Soup',        scale: 0.3  },
+  'ramen':            { folder: 'Ramen',             file: 'Ramen',            scale: 0.2  },
+  'salmon sashimi':   { folder: 'Salmon-Sashimi',    file: 'Salmon-Sashimi',   scale: 0.3  },
+  'takoyaki':         { folder: 'Takoyaki',          file: 'Takoyaki',         scale: 0.5  },
+  'tempura':          { folder: 'Tempura',           file: 'Tempura',          scale: 0.3  },
 };
 const ASSETS_BASE = '3d-model';
 
 function getLocalAssets(dishName) {
-  const key   = (dishName || '').toLowerCase().trim();
+  const key = (dishName || '').toLowerCase().trim();
   const entry = LOCAL_ASSETS[key];
   if (!entry) return { posterPath: DISH_IMAGES[key] || '', glbPath: '' };
-  const base  = `${ASSETS_BASE}/${entry.folder}/${entry.file}`;
+  const base = `${ASSETS_BASE}/${entry.folder}/${entry.file}`;
   return {
-    posterPath: DISH_IMAGES[entry.folder] || `${base}.png`,
+    posterPath: DISH_IMAGES[key] || `${base}.png`,
     glbPath:    `${base}.glb`,
     usdzPath:   `${base}.usdz`,
     scale:      entry.scale,
   };
 }
 
-/* ═══════════════════════════════════════════════════
-   SHEET CONFIG
-═══════════════════════════════════════════════════ */
 const SHEET_ID  = '1QAReLCzWLQEfNyY9V6Cg5VbGPqmbXh4XCZ_RCQSRlz0';
 const SHEET_GID = '0';
 const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
@@ -765,7 +749,6 @@ let allDishes = [], rawRows = [], activeCategory = 'all', currentLang = 'en';
 const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-/* ── CSV helpers ── */
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
@@ -790,26 +773,25 @@ function splitLine(line) {
 
 function rowToDish(row) {
   const truthy = v => ['true','yes','1'].includes((v||'').toLowerCase());
-  const sfx    = currentLang !== 'en' ? `_${currentLang}` : '';
-  const desc   = row[`description${sfx}`] || row['description'] || '';
-  const name   = row[`name${sfx}`]        || row['name']        || '';
-  const local  = getLocalAssets(row['name'] || name);
+  const sfx  = currentLang !== 'en' ? `_${currentLang}` : '';
+  const desc = row[`description${sfx}`] || row['description'] || '';
+  const name = row[`name${sfx}`]        || row['name']        || '';
+  const local = getLocalAssets(row['name'] || name);
   return {
-    id:         row['id']       || '',
-    name,
-    category:   (row['category'] || 'other').toLowerCase(),
-    jp:         row['jp_name']  || '',
+    id:        row['id']       || '',
+    name, category: (row['category'] || 'other').toLowerCase(),
+    jp:        row['jp_name']  || '',
     desc,
-    price:      parseInt(row['price'] || '0', 10),
-    veg:        truthy(row['veg']),
-    dotd:       truthy(row['dish of the day'] || row['dotd']),
-    isNew:      truthy(row['new']),
-    available:  truthy(row['available']),
-    glbPath:    local.glbPath,
-    usdzPath:   local.usdzPath,
+    price:     parseInt(row['price'] || '0', 10),
+    veg:       truthy(row['veg']),
+    dotd:      truthy(row['dish of the day'] || row['dotd']),
+    isNew:     truthy(row['new']),
+    available: truthy(row['available']),
+    glbPath:   local.glbPath,
+    usdzPath:  local.usdzPath,
     posterPath: local.posterPath,
-    scale:      local.scale,
-    emoji:      EMOJI_MAP[(row['name']||'').toLowerCase()] || '🍽️',
+    scale:     local.scale,
+    emoji:     EMOJI_MAP[(row['name']||'').toLowerCase()] || '🍽️',
   };
 }
 
@@ -826,7 +808,6 @@ function catLabel(cat) {
   return map ? (map[currentLang] || map.en) : (cat.charAt(0).toUpperCase() + cat.slice(1));
 }
 
-/* ── Tabs ── */
 function renderTabs() {
   const cats = ['all', ...new Set(allDishes.map(d => d.category))];
   const wrap = document.getElementById('tabs-inner');
@@ -838,22 +819,16 @@ function renderTabs() {
   );
 }
 
-const SVG_CUBE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-  <line x1="12" y1="22.08" x2="12" y2="12"/>
-</svg>`;
+const SVG_CUBE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`;
 
 function cardHTML(d) {
   const thumbContent = d.posterPath
     ? `<img src="${d.posterPath}" alt="${d.name}" loading="lazy"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-       <span style="display:none;font-size:32px;width:100%;height:100%;align-items:center;justify-content:center;">${d.emoji}</span>`
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        ><span style="display:none;font-size:32px;width:100%;height:100%;align-items:center;justify-content:center;">${d.emoji}</span>`
     : `<span style="font-size:32px;">${d.emoji}</span>`;
   return `
-    <div class="menu-card${d.available ? '' : ' unavailable'}" data-id="${d.id}"
-         role="button" tabindex="0" aria-label="View ${d.name}">
+    <div class="menu-card${d.available ? '' : ' unavailable'}" data-id="${d.id}" role="button" tabindex="0" aria-label="View ${d.name}">
       <div class="card-row">
         <div class="card-thumb">
           ${thumbContent}
@@ -896,13 +871,9 @@ function renderItems() {
   );
 }
 
-/* ═══════════════════════════════════════════════════
-   MODAL OPEN
-═══════════════════════════════════════════════════ */
 function openModal(id) {
   const d = allDishes.find(x => x.id === id);
   if (!d) return;
-
   document.getElementById('modal-name').textContent = d.name;
   document.getElementById('modal-jp').textContent   = d.jp;
   document.getElementById('modal-desc').textContent = d.desc;
@@ -916,41 +887,38 @@ function openModal(id) {
   arBadge.classList.remove('visible');
   scaleInfo.textContent = '';
 
-  /* Clear previous modal content */
   const vw = document.getElementById('modal-viewer-wrap');
-  vw.querySelectorAll('.modal-photo, model-viewer, .mv-ar-btn-wrap')
+  vw.querySelectorAll('.modal-photo, model-viewer, .no-model, .mv-loading-overlay, .mv-ar-btn-wrap')
     .forEach(el => el.remove());
 
-  /* ── Photo placeholder ── */
   const photoWrap = document.createElement('div');
   photoWrap.className = 'modal-photo';
-  photoWrap.style.cssText = `
-    position:absolute;inset:0;display:flex;
-    align-items:center;justify-content:center;overflow:hidden;
-    transition:opacity 0.4s;z-index:2;`;
+  photoWrap.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;';
   if (d.posterPath) {
     photoWrap.innerHTML = `
-      <img src="${d.posterPath}" alt="${d.name}"
-           style="width:100%;height:100%;object-fit:cover;"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img src="${d.posterPath}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <span style="display:none;font-size:80px;align-items:center;justify-content:center;width:100%;height:100%;">${d.emoji}</span>`;
   } else {
     photoWrap.innerHTML = `<span style="font-size:80px;">${d.emoji}</span>`;
   }
   vw.insertBefore(photoWrap, arBadge);
 
-  /* ── AR / 3D button ── */
   if (d.glbPath) {
     const arBtnWrap = document.createElement('div');
     arBtnWrap.className = 'mv-ar-btn-wrap';
-    arBtnWrap.style.cssText = `
-      position:absolute;bottom:16px;left:50%;
-      transform:translateX(-50%);z-index:6;
-      display:flex;gap:10px;align-items:center;`;
+    arBtnWrap.style.cssText = `position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:10px;align-items:center;`;
     arBtnWrap.innerHTML = `
-      <button class="modal-ar-launch-btn">✦ View On Table</button>`;
+      <button class="modal-ar-launch-btn" style="
+        display:inline-flex;align-items:center;gap:8px;
+        background:var(--crimson);color:var(--washi);
+        border:none;padding:11px 24px;
+        font-family:'Cinzel',serif;font-size:12px;font-weight:600;
+        letter-spacing:2px;cursor:pointer;white-space:nowrap;min-height:44px;
+        box-shadow:0 4px 18px rgba(139,26,26,0.45);">
+        ✦ View On Table
+      </button>`;
     vw.insertBefore(arBtnWrap, arBadge);
-
     arBtnWrap.querySelector('.modal-ar-launch-btn').addEventListener('click', () => {
       loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap);
     });
@@ -960,40 +928,20 @@ function openModal(id) {
   document.body.style.overflow = 'hidden';
 }
 
-/* ═══════════════════════════════════════════════════
-   LOAD MODEL + LAUNCH AR  ← ALL FIXES APPLIED HERE
-═══════════════════════════════════════════════════ */
 function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   const btn = arBtnWrap.querySelector('.modal-ar-launch-btn');
   btn.disabled = true;
-  btn.innerHTML = `
-    <span style="display:inline-block;width:14px;height:14px;
-      border:2px solid rgba(245,237,224,0.3);border-top-color:var(--washi);
-      border-radius:50%;animation:spin 0.8s linear infinite;"></span>
-    読込中…`;
-
-  /* Remove any existing model-viewer */
-  vw.querySelectorAll('model-viewer').forEach(el => el.remove());
+  btn.innerHTML = `<span style="display:inline-block;width:14px;height:14px;border:2px solid rgba(245,237,224,0.3);border-top-color:var(--washi);border-radius:50%;animation:spin 0.8s linear infinite;"></span> 読込中…`;
 
   const mv = document.createElement('model-viewer');
   mv.setAttribute('src', d.glbPath);
-
-  /* iOS USDZ for native AR */
   if (isIOS && d.usdzPath) mv.setAttribute('ios-src', d.usdzPath);
-
-  /* ✅ FIX 1 — Apply per-dish scale */
-  const s = d.scale;
-  mv.setAttribute('scale', `${s} ${s} ${s}`);
-
-  /* ✅ FIX 2 — Use 'auto' radius so camera fits the scaled model.
-     No more hard-coded 1.5m that ignores actual bounding box. */
-  mv.setAttribute('camera-orbit',     '0deg 75deg auto');
-  mv.setAttribute('min-camera-orbit', 'auto 10deg auto');
-  mv.setAttribute('max-camera-orbit', 'auto 90deg auto');
-
-  /* ✅ FIX 3 — Allow zoom so user can correct framing if needed */
-  /* (disable-zoom removed intentionally) */
-
+  const s = d.scale.toFixed(6);
+  mv.setAttribute('scale',            `${s} ${s} ${s}`);
+  mv.setAttribute('camera-orbit',     '0deg 70deg 1.5m');
+  mv.setAttribute('min-camera-orbit', 'auto 70deg 1.5m');
+  mv.setAttribute('max-camera-orbit', 'auto 70deg 1.5m');
+  mv.setAttribute('disable-zoom',     '');
   mv.setAttribute('ar',               '');
   mv.setAttribute('ar-modes',         'webxr scene-viewer quick-look');
   mv.setAttribute('ar-placement',     'floor');
@@ -1005,77 +953,40 @@ function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   mv.setAttribute('interaction-prompt','none');
   mv.setAttribute('loading',          'eager');
   mv.setAttribute('reveal',           'auto');
-
-  /* ✅ FIX 4 — Model must be VISIBLE so model-viewer can compute bounds.
-     Kept below photo (z-index:1) until loaded, then swapped. */
-  mv.style.cssText = `
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    background:transparent;
-    touch-action:none;
-    z-index:1;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.4s;`;
+  mv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;background:transparent;touch-action:none;z-index:-1;opacity:0;pointer-events:none;';
   vw.insertBefore(mv, arBadge);
 
-  /* ✅ FIX 5 — On load: reveal model, hide photo, show AR button */
   mv.addEventListener('load', () => {
-    /* Cross-fade model in, photo out */
-    mv.style.opacity          = '1';
-    mv.style.pointerEvents    = 'auto';
-    mv.style.zIndex           = '3';
-    photoWrap.style.opacity   = '0';
-    photoWrap.style.zIndex    = '1';
-
-    arBadge.classList.add('visible');
-    scaleInfo.textContent = 'Actual portion size';
-
-    /* Update button to trigger AR on click */
-    btn.disabled  = false;
-    btn.innerHTML = '✦ View in AR';
-
-    /* ✅ FIX 6 — activateAR on button click, NOT immediately on load */
-    btn.onclick = () => {
-      btn.disabled  = true;
-      btn.innerHTML = 'Launching AR…';
-      mv.activateAR();
-    };
-
+    mv.activateAR();
     mv.addEventListener('ar-status', (e) => {
       if (e.detail.status === 'failed' || e.detail.status === 'not-presenting') {
-        btn.disabled  = false;
+        btn.disabled = false;
         btn.innerHTML = '✦ View in AR';
+        mv.remove();
       }
-    });
+    }, { once: true });
   });
-
   mv.addEventListener('error', () => {
-    btn.disabled  = false;
+    btn.disabled = false;
     btn.innerHTML = '⚠ Retry';
     mv.remove();
-    photoWrap.style.opacity = '1';
   });
 }
 
-/* ── Close modal ── */
 function closeModal() {
   const mvEl = document.querySelector('#modal-viewer-wrap model-viewer');
   if (mvEl && typeof mvEl.pause === 'function') mvEl.pause();
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
-  document.querySelectorAll(
-    '#modal-viewer-wrap .modal-photo, #modal-viewer-wrap model-viewer, #modal-viewer-wrap .mv-ar-btn-wrap'
-  ).forEach(el => el.remove());
+  document.querySelectorAll('#modal-viewer-wrap .modal-photo, #modal-viewer-wrap model-viewer, #modal-viewer-wrap .mv-loading-overlay, #modal-viewer-wrap .mv-ar-btn-wrap')
+    .forEach(el => el.remove());
   document.getElementById('mv-ar-badge').classList.remove('visible');
 }
 
 document.addEventListener('visibilitychange', () => {
   const mvEl = document.querySelector('#modal-viewer-wrap model-viewer');
   if (!mvEl) return;
-  document.hidden
-    ? (typeof mvEl.pause === 'function' && mvEl.pause())
-    : (typeof mvEl.play  === 'function' && mvEl.play());
+  document.hidden ? (typeof mvEl.pause==='function' && mvEl.pause()) : (typeof mvEl.play==='function' && mvEl.play());
 });
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
@@ -1084,7 +995,6 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ── Language switcher ── */
 document.getElementById('lang-select').addEventListener('change', e => {
   currentLang = e.target.value;
   const t = I18N[currentLang] || I18N.en;
@@ -1095,7 +1005,6 @@ document.getElementById('lang-select').addEventListener('change', e => {
   renderTabs(); renderItems();
 });
 
-/* ── Init: fetch Google Sheet CSV ── */
 async function init() {
   const loadingEl = document.getElementById('loading-state');
   const container = document.getElementById('items-container');
