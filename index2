@@ -686,7 +686,7 @@ const DISH_IMAGES = {
 const LOCAL_ASSETS = {
   'agedashi tofu':    { folder: 'Agedashi-Tofu',    file: 'Agedashi-Tofu',    scale: 0.15 },
   'edamame':          { folder: 'Edamame',           file: 'Edamame',          scale: 0.15 },
-  'gyoza':            { folder: 'Gyoza',             file: 'Gyoza',            scale: 1    },
+  'gyoza':            { folder: 'Gyoza',             file: 'Gyoza',            scale: 1  },
   'karaage':          { folder: 'Karaage',           file: 'Karaage',          scale: 0.15 },
   'matcha ice cream': { folder: 'Matcha-Ice-Cream',  file: 'Matcha-Ice-Cream', scale: 0.3  },
   'miso soup':        { folder: 'Miso-Soup',         file: 'Miso-Soup',        scale: 0.3  },
@@ -936,7 +936,7 @@ function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   const mv = document.createElement('model-viewer');
   mv.setAttribute('src', d.glbPath);
   if (isIOS && d.usdzPath) mv.setAttribute('ios-src', d.usdzPath);
-  const s = (d.scale ?? 1).toFixed(6);
+  const s = d.scale.toFixed(6);
   mv.setAttribute('scale',            `${s} ${s} ${s}`);
   mv.setAttribute('camera-orbit',     '0deg 70deg 1.5m');
   mv.setAttribute('min-camera-orbit', 'auto 70deg 1.5m');
