@@ -922,7 +922,6 @@ function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   const mv = document.createElement('model-viewer');
   mv.setAttribute('src', d.glbPath);
   if (isIOS && d.usdzPath) mv.setAttribute('ios-src', d.usdzPath);
-  const s = d.scale.toFixed(6);
   mv.setAttribute('scale', d.scale);  // e.g. "0.3 0.3 0.3"
   mv.setAttribute('camera-orbit',     '0deg 70deg 1.5m');
   mv.setAttribute('min-camera-orbit', 'auto 70deg 1.5m');
