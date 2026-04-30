@@ -685,7 +685,7 @@ const DISH_IMAGES = {
 
 const LOCAL_ASSETS = {
   'agedashi tofu':    { folder: 'Agedashi-Tofu',    file: 'Agedashi-Tofu',    scale: 0.15 },
-  'edamame':          { folder: 'Edamame',           file: 'Edamame',          scale: 0.15 },
+  'edamame':          { folder: 'Edamame',           file: 'Edamame',          scale: 0.3 },
   'gyoza':            { folder: 'Gyoza',             file: 'Gyoza',            scale: 1    },
   'karaage':          { folder: 'Karaage',           file: 'Karaage',          scale: 0.15 },
   'matcha ice cream': { folder: 'Matcha-Ice-Cream',  file: 'Matcha-Ice-Cream', scale: 0.3  },
@@ -933,50 +933,39 @@ function loadModelAndAR(d, vw, arBadge, scaleInfo, arBtnWrap, photoWrap) {
   btn.disabled = true;
   btn.innerHTML = `<span style="display:inline-block;width:14px;height:14px;border:2px solid rgba(245,237,224,0.3);border-top-color:var(--washi);border-radius:50%;animation:spin 0.8s linear infinite;"></span> 読込中…`;
 
-  // desiredMetres = target real-world size (largest axis) in metres.
-  // 0.15 = 15 cm | 0.3 = 30 cm | 1 = 1 m
-  // We use getDimensions() after load to compute the correct scale factor,
-  // then apply it via setAttribute('scale') before activating AR.
-  // ar-scale="fixed" locks the size so users cannot pinch-resize in AR.
-  const desiredMetres = d.scale ?? 0.3;
-
   const mv = document.createElement('model-viewer');
   mv.setAttribute('src', d.glbPath);
   if (isIOS && d.usdzPath) mv.setAttribute('ios-src', d.usdzPath);
-  mv.setAttribute('ar',                '');
-  mv.setAttribute('ar-modes',          'webxr scene-viewer quick-look');
-  mv.setAttribute('ar-placement',      'floor');
-  mv.setAttribute('ar-scale',          'fixed');
-  mv.setAttribute('camera-controls',   '');
-  mv.setAttribute('auto-rotate',       '');
-  mv.setAttribute('shadow-intensity',  '1');
-  mv.setAttribute('environment-image', 'neutral');
-  mv.setAttribute('exposure',          '1.1');
+  const s = (d.scale ?? 1).toFixed(6);
+  mv.setAttribute('scale',            `${s} ${s} ${s}`);
+  mv.setAttribute('camera-orbit',     '0deg 70deg 1.5m');
+  mv.setAttribute('min-camera-orbit', 'auto 70deg 1.5m');
+  mv.setAttribute('max-camera-orbit', 'auto 70deg 1.5m');
+  mv.setAttribute('disable-zoom',     '');
+  mv.setAttribute('ar',               '');
+  mv.setAttribute('ar-modes',         'webxr scene-viewer quick-look');
+  mv.setAttribute('ar-placement',     'floor');
+  mv.setAttribute('ar-scale',         'fixed');
+  mv.setAttribute('camera-controls',  '');
+  mv.setAttribute('shadow-intensity', '1');
+  mv.setAttribute('environment-image','neutral');
+  mv.setAttribute('exposure',         '1.1');
   mv.setAttribute('interaction-prompt','none');
-  mv.setAttribute('loading',           'eager');
-  mv.setAttribute('reveal',            'auto');
+  mv.setAttribute('loading',          'eager');
+  mv.setAttribute('reveal',           'auto');
   mv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;background:transparent;touch-action:none;z-index:-1;opacity:0;pointer-events:none;';
   vw.insertBefore(mv, arBadge);
 
   mv.addEventListener('load', () => {
-    // getDimensions() returns the model's natural bounding box in metres.
-    // Compute uniform factor so its largest axis equals desiredMetres.
-    const dim = mv.getDimensions();
-    const largest = dim ? Math.max(dim.x, dim.y, dim.z) : 1;
-    const factor  = largest > 0 ? (desiredMetres / largest) : desiredMetres;
-    const f = factor.toFixed(6);
-    mv.setAttribute('scale', `${f} ${f} ${f}`);
-
     mv.activateAR();
     mv.addEventListener('ar-status', (e) => {
       if (e.detail.status === 'failed' || e.detail.status === 'not-presenting') {
         btn.disabled = false;
-        btn.innerHTML = '✶ View in AR';
+        btn.innerHTML = '✦ View in AR';
         mv.remove();
       }
     }, { once: true });
   });
-
   mv.addEventListener('error', () => {
     btn.disabled = false;
     btn.innerHTML = '⚠ Retry';
